@@ -22,6 +22,7 @@ export default class App extends React.Component {
     // B direkt
     // this.setState({ items: [...this.state.items, {text: text, date: Date.now()}] });
     this.setState({ items: [...this.state.items, { text, date: Date.now() }] });
+    this.inputText.clear();
   }
 
   render() {
@@ -45,6 +46,7 @@ export default class App extends React.Component {
             style={styles.input}
             placeholder="Tagebucheintrag erstellen"
             returnKeyType="done"
+            ref={input => (this.inputText = input)}
             onSubmitEditing={event => {
               this._addItem(event.nativeEvent.text);
             }}
