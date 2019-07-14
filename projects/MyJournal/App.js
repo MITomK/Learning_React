@@ -1,28 +1,52 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Picker } from 'react-native';
+import { FlatList, Picker, StyleSheet, Text, TextInput, View } from 'react-native';
 
-export default class App extends React.Component{
-  state = { item: null };
+export default class App extends React.Component {
+
+  state = { items: [] };
+
+  // Fügt ein Item der liste im State hinzu
+  _addItem(text) {
+    // es gibt hier zwei Möglichkeiten
+    // A etwas expliziter aber umständlicher
+    //    currentItems = this.state.items;
+    //    currentItems.push({text: text, date: Date.now()})
+    //    this.setState({items: [...currentItems]})
+    // B direkt
+    // this.setState({ items: [...this.state.items, {text: text, date: Date.now()}] });
+    this.setState({ items: [...this.state.items, { text, date: Date.now() }] });
+  }
+
   render() {
+    let content = <Text>Keine Einträge im Tagebuch!</Text>
+    if (this.state.items.length > 0) {
+      content = <FlatList
+                  style={styles.list}
+                  data={this.state.items}
+                  renderItem={({ item }) => <Text>{item.text}</Text>}
+                  keyExtractor={item => item.date.toString()}  // toString hier wichtig da der keyExtractor denselben erwartet
+                />
+    }
+    // console.log("CONTENT IS %o",content);
     return (
-    <View style={styles.container}>
-      <Text>{this.state.item || "Keine Einträge im Tagebuch!"}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Tagebucheintrag erstellen"
-        returnKeyType="done"
-        onSubmitEditing={ event => {
-          console.log("onSubmitEditing: " + event.nativeEvent.text);
-          this.setState({item: event.nativeEvent.text});
-        }}
+      <View style={styles.container}>
+        {content}
+        <TextInput
+          style={styles.input}
+          placeholder="Tagebucheintrag erstellen"
+          returnKeyType="done"
+          onSubmitEditing={event => {
+             this._addItem(event.nativeEvent.text)
+          }}
         // only tried for test purposes
         // onChangeText={ changedText => {
         //   console.log("onChangeText: " + changedText);
         //   this.setState({item: changedText});
         // }}
-      />
-    </View>
-  )};
+        />
+      </View>
+    )
+  };
 }
 
 const styles = StyleSheet.create({
@@ -34,5 +58,8 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40
+  },
+  list: {
+    marginTop: 24
   }
 });
