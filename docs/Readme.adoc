@@ -6,6 +6,16 @@
 == Learning React Native
 === Installation
 === Creating a project
+* Install expo-client +
+`npm install -g expo-cli`
+* Create the project +
+`expo init StepCounter`
+* Start the project +
+`cd StepCounter +
+npm start`
+
 === Link-List
-
-
+* Komponenten für React +
+https://nativebase.io
+* Facebooks ReactNative site +
+https://facebook.github.io/react-native/
