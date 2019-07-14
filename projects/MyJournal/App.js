@@ -1,19 +1,29 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Picker } from 'react-native';
 
-export default function App() {
-  return (
+export default class App extends React.Component{
+  state = { language: "java" };
+  render() {
+    return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>Keine Einträge im Tagebuch!</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Tagebucheintrag erstellen"
+        returnKeyType="done"
+      />
     </View>
-  );
+  )};
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+    // backgroundColor: '#fff',
+    // alignItems: 'center',
     justifyContent: 'center',
   },
+  input: {
+    height: 40
+  }
 });
