@@ -3,14 +3,41 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Picker,
+  SectionList,
   StyleSheet,
   Text,
   TextInput,
   View
 } from "react-native";
 
+// testdaten, die nur temporär zum spielen benötigt werden
+const journalItems = [
+  {
+    data: [
+      {
+        text: "Umgang mit SectionList gelernt",
+        date: 1 // eindeutiger, willkürlicher Wert
+      }
+    ],
+    title: "29.7.2019"
+  },
+  {
+    data: [
+      {
+        text: "Einkauf im Supermarkt",
+        date: 2
+      },
+      {
+        text: "Wochenendausflug geplant",
+        date: 3
+      }
+    ],
+    title: "28.7.2019"
+  }
+];
+
 export default class App extends React.Component {
-  state = { items: [] };
+  state = { items: journalItems };
 
   // Fügt ein Item der liste im State hinzu
   _addItem(text) {
@@ -21,22 +48,51 @@ export default class App extends React.Component {
     //    this.setState({items: [...currentItems]})
     // B direkt
     // this.setState({ items: [...this.state.items, {text: text, date: Date.now()}] });
-    this.setState({ items: [...this.state.items, { text, date: Date.now() }] });
+    // this.setState({ items: [...this.state.items, { text, date: Date.now() }] });
+    // this.inputText.clear();
+
+    let { items } = this.state;
+    let [head, ...tail] = items;
+
+    // Datum bearbeiten und im Format DD.M.YYYY aufbauen
+    const now = new Date();
+    const day = now.getDate();
+    const month = now.getMonth() + 1;
+    const year = now.getFullYear();
+    const today = `${day}.${month}.${year}`;
+
+    if (head === undefined || head.title !== today) {
+      // => entweder es ist der erste eintrag oder
+      // für heute gab es noch keinen
+      head = { data: [], title: today };
+      tail = items;
+    }
+
+    const newItem = { text: text, date: now.getTime() };
+    head.data = [newItem, ...head.data];
+    items = [head, ...tail];
+    this.setState({ items });
     this.inputText.clear();
   }
 
   render() {
     let content = <Text>Keine Einträge im Tagebuch!</Text>;
+    console.log("this.state.items: %o", this.state.items);
     if (this.state.items.length > 0) {
+      console.log("lenght is " + this.state.items.length);
       content = (
-        <FlatList
+        <SectionList
           style={styles.list}
-          data={this.state.items}
+          sections={this.state.items}
           renderItem={({ item }) => <Text>{item.text}</Text>}
+          renderSectionHeader={({ section }) => (
+            <Text style={styles.listHeader}>{section.title}</Text>
+          )}
           keyExtractor={item => item.date.toString()} // toString hier wichtig da der keyExtractor denselben erwartet
         />
       );
     }
+
     // console.log("CONTENT IS %o",content);
     return (
       <View style={styles.container}>
@@ -74,5 +130,8 @@ const styles = StyleSheet.create({
   },
   list: {
     marginTop: 24
+  },
+  listHeader: {
+    backgroundColor: "darkgray"
   }
 });
