@@ -12,7 +12,7 @@ import {
 const TouchableItem =
   Platform.OS === "ios" ? TouchableOpacity : TouchableNativeFeedback;
 
-export default class App extends Component {
+export default class JournalItems extends Component {
   render() {
     if (this.props.items.length === 0) {
       return <Text>Keine Einträge im Tagebuch!</Text>;
