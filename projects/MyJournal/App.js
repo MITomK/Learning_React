@@ -3,6 +3,7 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Picker,
+  Platform,
   SectionList,
   StyleSheet,
   Text,
@@ -88,19 +89,20 @@ export default class App extends React.Component {
         <SectionList
           style={styles.list}
           sections={this.state.items}
-          renderItem={({ item }) => {
+          renderItem={({ item }) => (
             <TouchableItem>
               <View>
                 <Text>{item.text}</Text>
               </View>
-            </TouchableItem>;
-          }}
+            </TouchableItem>
+          )}
           renderSectionHeader={({ section }) => (
             <Text style={styles.listHeader}>{section.title}</Text>
           )}
           keyExtractor={item => item.date.toString()} // toString hier wichtig da der keyExtractor denselben erwartet
         />
       );
+      console.log("content is %o", content);
     }
 
     // console.log("CONTENT IS %o",content);
