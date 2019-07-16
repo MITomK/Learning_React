@@ -1,17 +1,7 @@
-import React from "react";
-import {
-  FlatList,
-  KeyboardAvoidingView,
-  Picker,
-  Platform,
-  SectionList,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  View
-} from "react-native";
+import React, { Component } from "react";
+import { StyleSheet, View } from "react-native";
+import JournalItems from "./JournalItems";
+import JournalInputText from "./JournalInputText";
 
 // testdaten, die nur temporär zum spielen benötigt werden
 const journalItems = [
@@ -39,21 +29,11 @@ const journalItems = [
   }
 ];
 
-export default class App extends React.Component {
+export default class App extends Component {
   state = { items: journalItems };
 
   // Fügt ein Item der liste im State hinzu
   _addItem(text) {
-    // es gibt hier zwei Möglichkeiten
-    // A etwas expliziter aber umständlicher
-    //    currentItems = this.state.items;
-    //    currentItems.push({text: text, date: Date.now()})
-    //    this.setState({items: [...currentItems]})
-    // B direkt
-    // this.setState({ items: [...this.state.items, {text: text, date: Date.now()}] });
-    // this.setState({ items: [...this.state.items, { text, date: Date.now() }] });
-    // this.inputText.clear();
-
     let { items } = this.state;
     let [head, ...tail] = items;
 
@@ -79,52 +59,18 @@ export default class App extends React.Component {
   }
 
   render() {
-    const TouchableItem =
-      Platform.OS === "ios" ? TouchableOpacity : TouchableNativeFeedback;
-    let content = <Text>Keine Einträge im Tagebuch!</Text>;
-    console.log("this.state.items: %o", this.state.items);
-    if (this.state.items.length > 0) {
-      console.log("lenght is " + this.state.items.length);
-      content = (
-        <SectionList
-          style={styles.list}
-          sections={this.state.items}
-          renderItem={({ item }) => (
-            <TouchableItem>
-              <View>
-                <Text>{item.text}</Text>
-              </View>
-            </TouchableItem>
-          )}
-          renderSectionHeader={({ section }) => (
-            <Text style={styles.listHeader}>{section.title}</Text>
-          )}
-          keyExtractor={item => item.date.toString()} // toString hier wichtig da der keyExtractor denselben erwartet
-        />
-      );
-      console.log("content is %o", content);
-    }
-
-    // console.log("CONTENT IS %o",content);
     return (
       <View style={styles.container}>
-        {content}
-        <KeyboardAvoidingView behavior="padding">
-          <TextInput
-            style={styles.input}
-            placeholder="Tagebucheintrag erstellen"
-            returnKeyType="done"
-            ref={input => (this.inputText = input)}
-            onSubmitEditing={event => {
-              this._addItem(event.nativeEvent.text);
-            }}
-            // only tried for test purposes
-            // onChangeText={ changedText => {
-            //   console.log("onChangeText: " + changedText);
-            //   this.setState({item: changedText});
-            // }}
-          />
-        </KeyboardAvoidingView>
+        <JournalItems items={this.state.items} />
+        <JournalInputText
+          style={styles.input}
+          placeholder="Tagebucheintrag erstellen"
+          returnKeyType="done"
+          theRef={input => (this.inputText = input)}
+          onSubmitEditing={event => {
+            this._addItem(event.nativeEvent.text);
+          }}
+        />
       </View>
     );
   }
@@ -139,11 +85,5 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40
-  },
-  list: {
-    marginTop: 24
-  },
-  listHeader: {
-    backgroundColor: "darkgray"
   }
 });
