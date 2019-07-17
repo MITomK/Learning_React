@@ -4,32 +4,32 @@ import JournalItems from "./JournalItems";
 import JournalInputText from "./JournalInputText";
 
 // testdaten, die nur temporär zum spielen benötigt werden
-// const journalItems = [
-//   {
-//     data: [
-//       {
-//         text: "Umgang mit SectionList gelernt",
-//         date: 1 // eindeutiger, willkürlicher Wert
-//       }
-//     ],
-//     title: "29.7.2019"
-//   },
-//   {
-//     data: [
-//       {
-//         text: "Einkauf im Supermarkt",
-//         date: 2
-//       },
-//       {
-//         text: "Wochenendausflug geplant",
-//         date: 3
-//       }
-//     ],
-//     title: "28.7.2019"
-//   }
-// ];
+const journalItems = [
+  {
+    data: [
+      {
+        text: "TESTDATA: Umgang mit SectionList gelernt",
+        date: 1 // eindeutiger, willkürlicher Wert
+      }
+    ],
+    title: "29.7.2019"
+  },
+  {
+    data: [
+      {
+        text: "TESTDATA: Einkauf im Supermarkt",
+        date: 2
+      },
+      {
+        text: "TESTDATA: Wochenendausflug geplant",
+        date: 3
+      }
+    ],
+    title: "28.7.2019"
+  }
+];
 
-const journalItems = [];
+// const journalItems = [];
 
 export default class App extends Component {
   state = { items: journalItems };
@@ -82,9 +82,6 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1
-    // backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: "center"
   },
   inputText: {
     height: 40

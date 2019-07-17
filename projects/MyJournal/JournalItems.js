@@ -34,10 +34,12 @@ export default class JournalItems extends Component {
           </TouchableItem>
         )}
         renderSectionHeader={({ section }) => (
-          <Text style={styles.listHeader}>{section.title}</Text>
+          <Text style={styles.listSectionHeader}>{section.title}</Text>
         )}
         keyExtractor={item => item.date.toString()} // toString hier wichtig da der keyExtractor denselben erwartet
-        ItemSeparatorComponent={() => <View style={styles.listSeparator} />}
+        ItemSeparatorComponent={() => (
+          <View style={styles.listSectionSeparator} />
+        )}
       />
     );
   }
@@ -57,12 +59,12 @@ const styles = StyleSheet.create({
   list: {
     marginTop: 24
   },
-  listHeader: {
+  listSectionHeader: {
     color: "gray",
     backgroundColor: "lightcyan",
     textAlign: "center"
   },
-  listSeparator: {
+  listSectionSeparator: {
     height: StyleSheet.hairlineWidth,
     backgroundColor: "lightblue"
   }

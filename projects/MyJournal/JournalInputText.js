@@ -25,6 +25,5 @@ export default class JournalInputText extends Component {
         </View>
       </KeyboardAvoidingView>
     );
-    123;
   }
 }
