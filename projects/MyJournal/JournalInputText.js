@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { KeyboardAvoidingView, TextInput } from "react-native";
+import { KeyboardAvoidingView, TextInput, View } from "react-native";
 
 export default class JournalInputText extends Component {
   render() {
     const {
+      styleContainer,
       style,
       placeholder,
       returnKeyType,
@@ -13,14 +14,17 @@ export default class JournalInputText extends Component {
 
     return (
       <KeyboardAvoidingView behavior="padding">
-        <TextInput
-          style={style}
-          placeholder={placeholder}
-          returnKeyType={returnKeyType}
-          ref={theRef}
-          onSubmitEditing={onSubmitEditing}
-        />
+        <View style={styleContainer}>
+          <TextInput
+            style={style}
+            placeholder={placeholder}
+            returnKeyType={returnKeyType}
+            ref={theRef}
+            onSubmitEditing={onSubmitEditing}
+          />
+        </View>
       </KeyboardAvoidingView>
     );
+    123;
   }
 }

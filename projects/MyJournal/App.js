@@ -4,30 +4,32 @@ import JournalItems from "./JournalItems";
 import JournalInputText from "./JournalInputText";
 
 // testdaten, die nur temporär zum spielen benötigt werden
-const journalItems = [
-  {
-    data: [
-      {
-        text: "Umgang mit SectionList gelernt",
-        date: 1 // eindeutiger, willkürlicher Wert
-      }
-    ],
-    title: "29.7.2019"
-  },
-  {
-    data: [
-      {
-        text: "Einkauf im Supermarkt",
-        date: 2
-      },
-      {
-        text: "Wochenendausflug geplant",
-        date: 3
-      }
-    ],
-    title: "28.7.2019"
-  }
-];
+// const journalItems = [
+//   {
+//     data: [
+//       {
+//         text: "Umgang mit SectionList gelernt",
+//         date: 1 // eindeutiger, willkürlicher Wert
+//       }
+//     ],
+//     title: "29.7.2019"
+//   },
+//   {
+//     data: [
+//       {
+//         text: "Einkauf im Supermarkt",
+//         date: 2
+//       },
+//       {
+//         text: "Wochenendausflug geplant",
+//         date: 3
+//       }
+//     ],
+//     title: "28.7.2019"
+//   }
+// ];
+
+const journalItems = [];
 
 export default class App extends Component {
   state = { items: journalItems };
@@ -63,6 +65,7 @@ export default class App extends Component {
       <View style={styles.container}>
         <JournalItems items={this.state.items} />
         <JournalInputText
+          styleContainer={styles.inputContainer}
           style={styles.input}
           placeholder="Tagebucheintrag erstellen"
           returnKeyType="done"
@@ -78,12 +81,19 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
     // backgroundColor: '#fff',
     // alignItems: 'center',
-    justifyContent: "center"
+    // justifyContent: "center"
   },
   input: {
     height: 40
+  },
+  inputContainer: {
+    borderColor: "deepskyblue",
+    borderRadius: 8,
+    borderWidth: 1,
+    margin: 5,
+    paddingHorizontal: 5
   }
 });
