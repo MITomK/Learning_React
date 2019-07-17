@@ -5,7 +5,7 @@ export default class JournalInputText extends Component {
   render() {
     const {
       styleContainer,
-      style,
+      styleText,
       placeholder,
       returnKeyType,
       theRef,
@@ -16,7 +16,7 @@ export default class JournalInputText extends Component {
       <KeyboardAvoidingView behavior="padding">
         <View style={styleContainer}>
           <TextInput
-            style={style}
+            style={styleText}
             placeholder={placeholder}
             returnKeyType={returnKeyType}
             ref={theRef}

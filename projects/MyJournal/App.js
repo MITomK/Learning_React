@@ -66,7 +66,7 @@ export default class App extends Component {
         <JournalItems items={this.state.items} />
         <JournalInputText
           styleContainer={styles.inputContainer}
-          style={styles.input}
+          styleText={styles.inputText}
           placeholder="Tagebucheintrag erstellen"
           returnKeyType="done"
           theRef={input => (this.inputText = input)}
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // justifyContent: "center"
   },
-  input: {
+  inputText: {
     height: 40
   },
   inputContainer: {
