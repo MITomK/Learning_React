@@ -1,16 +1,6 @@
 import React, { Component } from "react";
-import {
-  Platform,
-  SectionList,
-  StyleSheet,
-  Text,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  View
-} from "react-native";
-
-const TouchableItem =
-  Platform.OS === "ios" ? TouchableOpacity : TouchableNativeFeedback;
+import { SectionList, StyleSheet, Text, View } from "react-native";
+import JournalItemRow from "./JournalItemRow";
 
 export default class JournalItems extends Component {
   render() {
@@ -26,13 +16,7 @@ export default class JournalItems extends Component {
       <SectionList
         style={styles.list}
         sections={this.props.items}
-        renderItem={({ item }) => (
-          <TouchableItem>
-            <View>
-              <Text>{item.text}</Text>
-            </View>
-          </TouchableItem>
-        )}
+        renderItem={({ item }) => <JournalItemRow item={item} />}
         renderSectionHeader={({ section }) => (
           <Text style={styles.listSectionHeader}>{section.title}</Text>
         )}
