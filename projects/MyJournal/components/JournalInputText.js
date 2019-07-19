@@ -11,10 +11,11 @@ export default class JournalInputText extends Component {
     this.props.onSubmit(text);
     this.inputText.clear();
   }
+
   render() {
     return (
       <KeyboardAvoidingView behavior="padding">
-        <View style={styles.container}>
+        <View style={styles.inputContainer}>
           <TextInput
             style={styles.inputText}
             placeholder={"Tagebucheintrag erstellen"}
@@ -29,9 +30,6 @@ export default class JournalInputText extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
   inputText: {
     height: 40
   },

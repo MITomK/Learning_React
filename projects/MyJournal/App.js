@@ -76,15 +76,5 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1
-  },
-  inputText: {
-    height: 40
-  },
-  inputContainer: {
-    borderColor: "deepskyblue",
-    borderRadius: 8,
-    borderWidth: 1,
-    margin: 5,
-    paddingHorizontal: 5
   }
 });
