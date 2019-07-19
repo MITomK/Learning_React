@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
-import JournalItems from "./JournalItems";
-import JournalInputText from "./JournalInputText";
+import JournalItems from "./components/JournalItems";
+import JournalInputText from "./components/JournalInputText";
 
 // testdaten, die nur temporär zum spielen benötigt werden
 const journalItems = [
