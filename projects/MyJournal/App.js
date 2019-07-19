@@ -57,7 +57,6 @@ export default class App extends Component {
     head.data = [newItem, ...head.data];
     items = [head, ...tail];
     this.setState({ items });
-    this.inputText.clear();
   }
 
   render() {
@@ -65,13 +64,8 @@ export default class App extends Component {
       <View style={styles.container}>
         <JournalItems items={this.state.items} />
         <JournalInputText
-          styleContainer={styles.inputContainer}
-          styleText={styles.inputText}
-          placeholder="Tagebucheintrag erstellen"
-          returnKeyType="done"
-          theRef={input => (this.inputText = input)}
-          onSubmitEditing={event => {
-            this._addItem(event.nativeEvent.text);
+          onSubmit={text => {
+            this._addItem(text);
           }}
         />
       </View>
