@@ -1,16 +1,6 @@
 import React, { Component } from "react";
-import {
-  Image,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  View
-} from "react-native";
-
-const TouchableItem =
-  Platform.OS === "ios" ? TouchableOpacity : TouchableNativeFeedback;
+import { Image, StyleSheet, Text, View } from "react-native";
+import TouchableItem from "./TouchableItem";
 
 export default class JournalItemRow extends Component {
   render() {
@@ -21,7 +11,13 @@ export default class JournalItemRow extends Component {
     const seconds = (date.getSeconds() < 10 ? "0" : "") + date.getSeconds();
     const time = `${hours}:${minutes}:${seconds}`;
     return (
-      <TouchableItem>
+      <TouchableItem
+        onPress={() =>
+          alert(
+            "FAQ_01:  TODO: clarify how to access the children from here to get specific text"
+          )
+        }
+      >
         <View style={styles.container}>
           <Image
             style={styles.image}

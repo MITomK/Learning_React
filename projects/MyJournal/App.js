@@ -1,35 +1,35 @@
 import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
 import JournalItems from "./components/JournalItems";
-import JournalInputText from "./components/JournalInputText";
+import JournalItemInput from "./components/JournalItemInput";
 
 // testdaten, die nur temporär zum spielen benötigt werden
-const journalItems = [
-  {
-    data: [
-      {
-        text: "TESTDATA: Umgang mit SectionList gelernt",
-        date: 1 // eindeutiger, willkürlicher Wert
-      }
-    ],
-    title: "29.7.2019"
-  },
-  {
-    data: [
-      {
-        text: "TESTDATA: Einkauf im Supermarkt",
-        date: 2
-      },
-      {
-        text: "TESTDATA: Wochenendausflug geplant",
-        date: 3
-      }
-    ],
-    title: "28.7.2019"
-  }
-];
+// const journalItems = [
+//   {
+//     data: [
+//       {
+//         text: "TESTDATA: Umgang mit SectionList gelernt",
+//         date: 1 // eindeutiger, willkürlicher Wert
+//       }
+//     ],
+//     title: "29.7.2019"
+//   },
+//   {
+//     data: [
+//       {
+//         text: "TESTDATA: Einkauf im Supermarkt",
+//         date: 2
+//       },
+//       {
+//         text: "TESTDATA: Wochenendausflug geplant",
+//         date: 3
+//       }
+//     ],
+//     title: "28.7.2019"
+//   }
+// ];
 
-// const journalItems = [];
+const journalItems = [];
 
 export default class App extends Component {
   state = { items: journalItems };
@@ -63,7 +63,7 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <JournalItems items={this.state.items} />
-        <JournalInputText
+        <JournalItemInput
           onSubmit={text => {
             this._addItem(text);
           }}
