@@ -11,6 +11,10 @@ export default class JournalItemRow extends Component {
     const seconds = (date.getSeconds() < 10 ? "0" : "") + date.getSeconds();
     const time = `${hours}:${minutes}:${seconds}`;
 
+    const photo = item.photo ? (
+      <Image style={styles.image} source={{ uri: item.photo }} />
+    ) : null;
+
     return (
       <TouchableItem
         onPress={() =>
@@ -20,7 +24,7 @@ export default class JournalItemRow extends Component {
         }
       >
         <View style={styles.container}>
-          <Image style={styles.image} source={{ uri: item.photo }} />
+          {photo}
           <View style={styles.itemText}>
             <Text numberOfLines={3}>{item.text}</Text>
             <Text style={styles.time}>{time}</Text>
