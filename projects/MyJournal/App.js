@@ -7,10 +7,13 @@ import Store from "./services/Store";
 export default class App extends Component {
   state = { items: [] };
 
-  // ComponentWillMount is deprecated
-  componentWillMount() {
+  // componentWillMount is deprecated
+  // => Behrendt
+  componentDidMount() {
     this._refreshItems();
   }
+
+  com;
 
   _refreshItems = async () => {
     const items = await Store.loadItems();

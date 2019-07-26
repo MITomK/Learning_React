@@ -9,6 +9,8 @@ import {
 import { SimpleLineIcons } from "@expo/vector-icons";
 import TouchableItem from "./TouchableItem";
 
+// use these imports instead from 'expo'
+// => Behrendt
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 
