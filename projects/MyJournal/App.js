@@ -35,7 +35,7 @@ export default class App extends Component {
   state = { items: journalItems };
 
   // Fügt ein Item der liste im State hinzu
-  _addItem(text) {
+  _addItem(text, photo) {
     let { items } = this.state;
     let [head, ...tail] = items;
 
@@ -53,7 +53,7 @@ export default class App extends Component {
       tail = items;
     }
 
-    const newItem = { text: text, date: now.getTime() };
+    const newItem = { text: text, photo: photo, date: now.getTime() };
     head.data = [newItem, ...head.data];
     items = [head, ...tail];
     this.setState({ items });
@@ -64,8 +64,8 @@ export default class App extends Component {
       <View style={styles.container}>
         <JournalItems items={this.state.items} />
         <JournalItemInput
-          onSubmit={text => {
-            this._addItem(text);
+          onSubmit={(text, photo) => {
+            this._addItem(text, photo);
           }}
         />
       </View>

@@ -10,6 +10,7 @@ export default class JournalItemRow extends Component {
     const minutes = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
     const seconds = (date.getSeconds() < 10 ? "0" : "") + date.getSeconds();
     const time = `${hours}:${minutes}:${seconds}`;
+
     return (
       <TouchableItem
         onPress={() =>
@@ -19,10 +20,7 @@ export default class JournalItemRow extends Component {
         }
       >
         <View style={styles.container}>
-          <Image
-            style={styles.image}
-            source={require("./../assets/foto.png")}
-          />
+          <Image style={styles.image} source={{ uri: item.photo }} />
           <View style={styles.itemText}>
             <Text numberOfLines={3}>{item.text}</Text>
             <Text style={styles.time}>{time}</Text>

@@ -15,8 +15,9 @@ import * as Permissions from "expo-permissions";
 export default class JournalInput extends Component {
   state = { photo: null };
   _submit(text) {
-    this.props.onSubmit(text);
     this.inputText.clear();
+    this.props.onSubmit(text, this.state.photo);
+    this.setState({ photo: null });
   }
 
   _hasCameraPermissions = async () => {
