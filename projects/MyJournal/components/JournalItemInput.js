@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  Image,
   KeyboardAvoidingView,
   StyleSheet,
   TextInput,
@@ -8,19 +9,55 @@ import {
 import { SimpleLineIcons } from "@expo/vector-icons";
 import TouchableItem from "./TouchableItem";
 
+import * as ImagePicker from "expo-image-picker";
+import * as Permissions from "expo-permissions";
+
 export default class JournalInput extends Component {
+  state = { photo: null };
   _submit(text) {
     this.props.onSubmit(text);
     this.inputText.clear();
   }
 
+  _hasCameraPermissions = async () => {
+    let permission = await Permissions.askAsync(Permissions.CAMERA);
+    if (permission.status !== "granted") {
+      console.log("Permission to camera was denied!!!");
+      return false;
+    }
+    permission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (permission.status !== "granted") {
+      console.log("Permission to camera roll was denied!!!");
+      return false;
+    }
+
+    return true;
+  };
+
+  _launchCamera = async () => {
+    if (this._hasCameraPermissions()) {
+      const result = await ImagePicker.launchCameraAsync();
+
+      if (!result.cancelled) {
+        this.setState({ photo: result.uri });
+        this.inputText.focus();
+      }
+    }
+  };
+
   render() {
+    const photoIcon = this.state.photo ? (
+      <Image style={styles.imagePreview} source={{ uri: this.state.photo }} />
+    ) : (
+      <SimpleLineIcons name="camera" size={24} color="deepskyblue" />
+    );
+
     return (
       <KeyboardAvoidingView behavior="padding">
         <View style={styles.inputContainer}>
           <View style={styles.photoIcon}>
-            <TouchableItem>
-              <SimpleLineIcons name="camera" size={24} color="deepskyblue" />
+            <TouchableItem onPress={() => this._launchCamera()}>
+              {photoIcon}
             </TouchableItem>
           </View>
           <TextInput
@@ -54,5 +91,9 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     height: 40
+  },
+  imagePreview: {
+    width: 24,
+    height: 24
   }
 });
