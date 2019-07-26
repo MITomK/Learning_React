@@ -2,67 +2,65 @@ import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
 import JournalItems from "./components/JournalItems";
 import JournalItemInput from "./components/JournalItemInput";
-
-// testdaten, die nur temporär zum spielen benötigt werden
-// const journalItems = [
-//   {
-//     data: [
-//       {
-//         text: "TESTDATA: Umgang mit SectionList gelernt",
-//         date: 1 // eindeutiger, willkürlicher Wert
-//       }
-//     ],
-//     title: "29.7.2019"
-//   },
-//   {
-//     data: [
-//       {
-//         text: "TESTDATA: Einkauf im Supermarkt",
-//         date: 2
-//       },
-//       {
-//         text: "TESTDATA: Wochenendausflug geplant",
-//         date: 3
-//       }
-//     ],
-//     title: "28.7.2019"
-//   }
-// ];
-
-const journalItems = [];
+import Store from "./services/Store";
 
 export default class App extends Component {
-  state = { items: journalItems };
+  state = { items: [] };
 
-  // Fügt ein Item der liste im State hinzu
+  // ComponentWillMount is deprecated
+  componentWillMount() {
+    this._refreshItems();
+  }
+
+  _refreshItems = async () => {
+    const items = await Store.loadItems();
+    this.setState({ items });
+  };
+
+  _getSectionTitleFromDate(date) {
+    // Datum bearbeiten und im Format DD.M.YYYY aufbauen
+    const dateObj = new Date(date);
+    const day = dateObj.getDate();
+    const month = dateObj.getMonth() + 1;
+    const year = dateObj.getFullYear();
+    return `${day}.${month}.${year}`;
+  }
+
+  _getItemsWithSections(items) {
+    if (items.length === 0) return [];
+
+    // Datenstruktur für Sections mit Eintrag initialisieren
+    let sectionTitle = this._getSectionTitleFromDate(items[0].date);
+    let sections = [{ data: [], title: sectionTitle }];
+    items.forEach(item => {
+      sectionTitle = this._getSectionTitleFromDate(item.date);
+      let lastSection = sections[sections.length - 1];
+
+      // trage item in section data ein, falls item am gleichen Tag
+      if (lastSection.title == sectionTitle) {
+        lastSection.data.push(item);
+      } else {
+        // neue Section anhängen, falls item an anderem Tag
+        sections.push({ data: [item], title: sectionTitle });
+      }
+    });
+    return sections;
+  }
+
   _addItem(text, photo) {
     let { items } = this.state;
-    let [head, ...tail] = items;
-
-    // Datum bearbeiten und im Format DD.M.YYYY aufbauen
-    const now = new Date();
-    const day = now.getDate();
-    const month = now.getMonth() + 1;
-    const year = now.getFullYear();
-    const today = `${day}.${month}.${year}`;
-
-    if (head === undefined || head.title !== today) {
-      // => entweder es ist der erste eintrag oder
-      // für heute gab es noch keinen
-      head = { data: [], title: today };
-      tail = items;
-    }
-
-    const newItem = { text: text, photo: photo, date: now.getTime() };
-    head.data = [newItem, ...head.data];
-    items = [head, ...tail];
-    this.setState({ items });
+    // Neuen Eintrag am Anfang der Liste eintragen und speichern
+    const newItem = { text, photo, date: Date.now() };
+    items = [newItem, ...items];
+    this.setState({ items: items });
+    Store.saveItems(items);
   }
 
   render() {
+    const sections = this._getItemsWithSections(this.state.items);
     return (
       <View style={styles.container}>
-        <JournalItems items={this.state.items} />
+        <JournalItems items={sections} />
         <JournalItemInput
           onSubmit={(text, photo) => {
             this._addItem(text, photo);

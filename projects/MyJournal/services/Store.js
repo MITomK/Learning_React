@@ -16,7 +16,7 @@ export default class Store {
 
   static saveItems = async items => {
     try {
-      await AsyncStorage.saveItem(ITEMS_KEY, JSON.stringify(items));
+      await AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(items));
     } catch (error) {
       console.error("Error saving journal items.", error.message);
     }
