@@ -68,6 +68,11 @@ export default class App extends Component {
           onSubmit={(text, photo) => {
             this._addItem(text, photo);
           }}
+          // es würde auch direkt refresh={ () => this.setState({items: []})} gehen
+          // denke aber das ist wg. try-catch im Store sicherer
+          refresh={() => {
+            this._refreshItems();
+          }}
         />
       </View>
     );
