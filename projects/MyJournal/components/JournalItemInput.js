@@ -19,7 +19,7 @@ import * as Permissions from "expo-permissions";
 export default class JournalInput extends Component {
   state = { photo: null };
 
-  _getWeather = async () => {
+  _getWeatherBehrends = async () => {
     let result = { location: null, weather: null };
     const location = "Freiburg";
     const url =
@@ -30,6 +30,32 @@ export default class JournalInput extends Component {
       const { weather, main } = weatherJSON[location];
       result = {
         location: location,
+        weather: `${Math.floor(main.temp)}°C ${weather[0].description}`
+      };
+    } catch (error) {
+      console.log("Error fetching weather data", error);
+    }
+    return result;
+  };
+
+  // http://api.openweathermap.org/data/2.5/weather?q=Freiburg&APPID=ff03cf2ca01a42602a83f04e74466106&units=metric&lang=de
+
+  _getWeatherOpenWeatherMap = async () => {
+    let result = { location: null, weather: null };
+    const location = "q=Freiburg";
+    const apiKey = "APPID=ff03cf2ca01a42602a83f04e74466106";
+    const url =
+      "http://api.openweathermap.org/data/2.5/weather?" +
+      location +
+      "&" +
+      apiKey +
+      "&units=metric&lang=de";
+    try {
+      const response = await fetch(url);
+      const weatherJSON = await response.json();
+      const { weather, main, name } = weatherJSON;
+      result = {
+        location: name,
         weather: `${Math.floor(main.temp)}°C ${weather[0].description}`
       };
     } catch (error) {
@@ -56,7 +82,7 @@ export default class JournalInput extends Component {
   }
 
   _submitWithWeather = async (text, photo) => {
-    const { location, weather } = await this._getWeather();
+    const { location, weather } = await this._getWeatherOpenWeatherMap();
     this.props.onSubmit({ text, photo, location, weather });
   };
 
