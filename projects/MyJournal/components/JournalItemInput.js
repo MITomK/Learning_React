@@ -15,6 +15,7 @@ import Store from "../services/Store";
 // => Behrendt
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
+import * as Location from "expo-location";
 
 export default class JournalInput extends Component {
   state = { photo: null };
@@ -42,15 +43,24 @@ export default class JournalInput extends Component {
 
   _getWeatherOpenWeatherMap = async () => {
     let result = { location: null, weather: null };
-    const location = "q=Freiburg";
-    const apiKey = "APPID=ff03cf2ca01a42602a83f04e74466106";
-    const url =
-      "http://api.openweathermap.org/data/2.5/weather?" +
-      location +
-      "&" +
-      apiKey +
-      "&units=metric&lang=de";
     try {
+      const { status } = await Permissions.askAsync(Permissions.LOCATION);
+      if (status !== "granted") {
+        console.log("Permission to access location was denied!!!");
+        return result;
+      }
+
+      const position = await Location.getCurrentPositionAsync({});
+      const { longitude, latitude } = position.coords;
+      const location = `lon=${longitude}&lat=${latitude}`;
+      const apiKey = "APPID=ff03cf2ca01a42602a83f04e74466106";
+      const url =
+        "http://api.openweathermap.org/data/2.5/weather?" +
+        location +
+        "&" +
+        apiKey +
+        "&units=metric&lang=de";
+
       const response = await fetch(url);
       const weatherJSON = await response.json();
       const { weather, main, name } = weatherJSON;
