@@ -50,10 +50,9 @@ export default class App extends Component {
     return sections;
   }
 
-  _addItem(text, photo) {
+  _addItem(newItem) {
     let { items } = this.state;
-    // Neuen Eintrag am Anfang der Liste eintragen und speichern
-    const newItem = { text, photo, date: Date.now() };
+    newItem.date = Date.now();
     items = [newItem, ...items];
     this.setState({ items: items });
     Store.saveItems(items);
@@ -65,8 +64,8 @@ export default class App extends Component {
       <View style={styles.container}>
         <JournalItems items={sections} />
         <JournalItemInput
-          onSubmit={(text, photo) => {
-            this._addItem(text, photo);
+          onSubmit={newItem => {
+            this._addItem(newItem);
           }}
           // es würde auch direkt refresh={ () => this.setState({items: []})} gehen
           // denke aber das ist wg. try-catch im Store sicherer

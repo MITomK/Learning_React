@@ -5,6 +5,7 @@ import TouchableItem from "./TouchableItem";
 export default class JournalItemRow extends Component {
   render() {
     const { item } = this.props;
+    const { text, location, weather } = item;
     const date = new Date(item.date);
     const hours = date.getHours();
     const minutes = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
@@ -27,7 +28,8 @@ export default class JournalItemRow extends Component {
           {photo}
           <View style={styles.itemText}>
             <Text numberOfLines={3}>{item.text}</Text>
-            <Text style={styles.time}>{time}</Text>
+            <Text style={styles.time}>{`${location || ""} ${weather ||
+              ""} ${time}`}</Text>
           </View>
         </View>
       </TouchableItem>
@@ -40,7 +42,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     paddingHorizontal: 5,
-    paddingVertical: 3
+    paddingVertical: 3,
+    minHeight: 50
   },
   image: {
     width: 70,
