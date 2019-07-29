@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  Alert,
   Image,
   KeyboardAvoidingView,
   StyleSheet,
@@ -74,22 +73,22 @@ export default class JournalInput extends Component {
     return result;
   };
 
-  _deleteItems() {
-    Alert.alert(
-      "Einträge löschen",
-      "Sollen wirklich alle Einträge gelöscht werden?",
-      [
-        { text: "Nein", style: "cancel" },
-        {
-          text: "Ja",
-          onPress: async () => {
-            await Store.deleteItems();
-            this.props.refresh();
-          }
-        }
-      ]
-    );
-  }
+  // _deleteItems() {
+  //   Alert.alert(
+  //     "Einträge löschen",
+  //     "Sollen wirklich alle Einträge gelöscht werden?",
+  //     [
+  //       { text: "Nein", style: "cancel" },
+  //       {
+  //         text: "Ja",
+  //         onPress: async () => {
+  //           await Store.deleteItems();
+  //           this.props.refresh();
+  //         }
+  //       }
+  //     ]
+  //   );
+  // }
 
   _submitWithWeather = async (text, photo) => {
     const { location, weather } = await this._getWeatherOpenWeatherMap();
@@ -153,11 +152,11 @@ export default class JournalInput extends Component {
               onSubmitEditing={event => this._submit(event.nativeEvent.text)}
             />
           </View>
-          <TouchableItem onPress={() => this._deleteItems()}>
+          {/* <TouchableItem onPress={() => this._deleteItems()}>
             <View>
               <SimpleLineIcons name="trash" size={24} color="deepskyblue" />
             </View>
-          </TouchableItem>
+          </TouchableItem> */}
         </View>
       </KeyboardAvoidingView>
     );

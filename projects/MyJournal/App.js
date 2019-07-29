@@ -29,7 +29,7 @@ export default class App extends Component {
       <AppNavigator
         screenProps={{
           items: this.state.items,
-          refresh: () => this._refreshItems,
+          refresh: this._refreshItems,
           onSubmit: item => this._addItem(item)
         }}
       />
