@@ -3,7 +3,7 @@ import React from "react";
 import { createAppContainer, createBottomTabNavigator } from "react-navigation";
 
 import JournalScreen from "./screens/JournalScreen";
-import PhotoScreen from "./screens/PhotoScreen";
+import PhotosScreen from "./screens/PhotosScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 
 import { SimpleLineIcons } from "@expo/vector-icons";
@@ -20,7 +20,7 @@ const Tabs = createBottomTabNavigator({
     }
   },
   Photo: {
-    screen: PhotoScreen,
+    screen: PhotosScreen,
     navigationOptions: {
       title: "Fotos",
       tabBarIcon: ({ tintColor }) => (
