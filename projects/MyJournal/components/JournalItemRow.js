@@ -17,13 +17,7 @@ export default class JournalItemRow extends Component {
     ) : null;
 
     return (
-      <TouchableItem
-        onPress={() =>
-          alert(
-            "FAQ_01:  TODO: clarify how to access the children from here to get specific text"
-          )
-        }
-      >
+      <TouchableItem onPress={this.props.onPress}>
         <View style={styles.container}>
           {photo}
           <View style={styles.itemText}>

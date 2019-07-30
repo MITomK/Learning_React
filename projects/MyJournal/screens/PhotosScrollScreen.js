@@ -8,7 +8,7 @@ import {
   View
 } from "react-native";
 
-export default class PhotosScreen extends Component {
+export default class PhotosScrollScreen extends Component {
   _getPhotos(items) {
     return items.map(item => (
       <Image
@@ -32,7 +32,7 @@ export default class PhotosScreen extends Component {
         </View>
       );
 
-    return <ScrollView>{this._getPhotos(items)}</ScrollView>;
+    return <ScrollView horizontal={true}>{this._getPhotos(items)}</ScrollView>;
   }
 }
 

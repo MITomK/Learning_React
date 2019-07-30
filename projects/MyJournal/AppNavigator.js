@@ -1,12 +1,18 @@
 import React from "react";
 import { Platform } from "react-native";
-import { createAppContainer, createBottomTabNavigator } from "react-navigation";
+import {
+  createAppContainer,
+  createBottomTabNavigator,
+  createStackNavigator
+} from "react-navigation";
 
 import { SimpleLineIcons } from "@expo/vector-icons";
 
 import JournalScreen from "./screens/JournalScreen";
-import PhotosScreen from "./screens/PhotosScreen";
+import PhotosScrollScreen from "./screens/PhotosScrollScreen";
+import PhotosFlatListScreen from "./screens/PhotosFlatListScreen";
 import SettingsScreen from "./screens/SettingsScreen";
+import ItemScreen from "./screens/ItemScreen";
 
 const Tabs = createBottomTabNavigator(
   {
@@ -19,10 +25,19 @@ const Tabs = createBottomTabNavigator(
         )
       }
     },
-    Photos: {
-      screen: PhotosScreen,
+    PhotosScroll: {
+      screen: PhotosScrollScreen,
       navigationOptions: {
-        title: "Fotos",
+        title: "Fotos(Scroll)",
+        tabBarIcon: ({ tintColor }) => (
+          <SimpleLineIcons name="picture" size={24} color={tintColor} />
+        )
+      }
+    },
+    PhotosList: {
+      screen: PhotosFlatListScreen,
+      navigationOptions: {
+        title: "Fotos(FlatList)",
         tabBarIcon: ({ tintColor }) => (
           <SimpleLineIcons name="picture" size={24} color={tintColor} />
         )
@@ -59,4 +74,13 @@ const Tabs = createBottomTabNavigator(
   }
 );
 
-export default createAppContainer(Tabs);
+const AppNavigator = createStackNavigator({
+  root: {
+    screen: Tabs
+  },
+  Item: {
+    screen: ItemScreen
+  }
+});
+
+export default createAppContainer(AppNavigator);

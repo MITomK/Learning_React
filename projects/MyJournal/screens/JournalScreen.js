@@ -35,11 +35,12 @@ export default class JournalScreen extends Component {
   }
 
   render() {
+    const { navigate } = this.props.navigation;
     const { items, refresh, onSubmit } = this.props.screenProps;
     const sections = this._getItemsWithSections(items);
     return (
       <View style={styles.container}>
-        <JournalItems items={sections} />
+        <JournalItems items={sections} onPress={() => navigate("Item")} />
         <JournalItemInput onSubmit={onSubmit} refresh={refresh} />
       </View>
     );
