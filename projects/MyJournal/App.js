@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Store from "./services/Store";
-import AppNavigator from "./AppNavigator";
+import AppNavigator from "./navigation/AppNavigator";
 
 export default class App extends Component {
   state = { items: [] };

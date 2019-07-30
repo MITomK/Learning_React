@@ -8,11 +8,11 @@ import {
 
 import { SimpleLineIcons } from "@expo/vector-icons";
 
-import JournalScreen from "./screens/JournalScreen";
-import PhotosScrollScreen from "./screens/PhotosScrollScreen";
-import PhotosFlatListScreen from "./screens/PhotosFlatListScreen";
-import SettingsScreen from "./screens/SettingsScreen";
-import ItemScreen from "./screens/ItemScreen";
+import JournalScreen from "../screens/JournalScreen";
+import PhotosScrollScreen from "../screens/PhotosScrollScreen";
+import PhotosFlatListScreen from "../screens/PhotosFlatListScreen";
+import SettingsScreen from "../screens/SettingsScreen";
+import ItemScreen from "../screens/ItemScreen";
 
 const Tabs = createBottomTabNavigator(
   {
