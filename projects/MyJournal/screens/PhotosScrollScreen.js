@@ -32,7 +32,11 @@ export default class PhotosScrollScreen extends Component {
         </View>
       );
 
-    return <ScrollView horizontal={true}>{this._getPhotos(items)}</ScrollView>;
+    return (
+      <ScrollView horizontal={true} pagingEnabled={true}>
+        {this._getPhotos(items)}
+      </ScrollView>
+    );
   }
 }
 
