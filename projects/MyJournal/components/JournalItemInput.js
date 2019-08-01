@@ -73,23 +73,6 @@ export default class JournalInput extends Component {
     return result;
   };
 
-  // _deleteItems() {
-  //   Alert.alert(
-  //     "Einträge löschen",
-  //     "Sollen wirklich alle Einträge gelöscht werden?",
-  //     [
-  //       { text: "Nein", style: "cancel" },
-  //       {
-  //         text: "Ja",
-  //         onPress: async () => {
-  //           await Store.deleteItems();
-  //           this.props.refresh();
-  //         }
-  //       }
-  //     ]
-  //   );
-  // }
-
   _submitWithWeather = async (text, photo) => {
     const { location, weather } = await this._getWeatherOpenWeatherMap();
     this.props.onSubmit({ text, photo, location, weather });
@@ -135,7 +118,7 @@ export default class JournalInput extends Component {
     );
 
     return (
-      <KeyboardAvoidingView behavior="padding">
+      <KeyboardAvoidingView keyboardVerticalOffset={120} behavior="padding">
         <View style={styles.container}>
           <View style={styles.inputContainer}>
             <View style={styles.photoIcon}>

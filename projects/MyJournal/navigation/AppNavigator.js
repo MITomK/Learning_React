@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform } from "react-native";
+import { Platform, StatusBar } from "react-native";
 import {
   createAppContainer,
   createBottomTabNavigator,
@@ -13,6 +13,7 @@ import PhotosScrollScreen from "../screens/PhotosScrollScreen";
 import PhotosFlatListScreen from "../screens/PhotosFlatListScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import ItemScreen from "../screens/ItemScreen";
+import { SyntheticPlatformEmitter } from "@unimodules/core";
 
 const Tabs = createBottomTabNavigator(
   {
@@ -74,13 +75,29 @@ const Tabs = createBottomTabNavigator(
   }
 );
 
-const AppNavigator = createStackNavigator({
-  root: {
-    screen: Tabs
+const AppNavigator = createStackNavigator(
+  {
+    root: {
+      screen: Tabs
+    },
+    Item: {
+      screen: ItemScreen
+    }
   },
-  Item: {
-    screen: ItemScreen
+  {
+    defaultNavigationOptions: {
+      headerTintColor: "deepskyblue",
+      headerStyle: {
+        ...Platform.select(
+          { android: { marginTop: StatusBar.currentHeight } },
+          { ios: { backgroundColor: "white" } }
+        )
+      }
+    },
+    cardStyle: {
+      backgroundColor: "white"
+    }
   }
-});
+);
 
 export default createAppContainer(AppNavigator);
