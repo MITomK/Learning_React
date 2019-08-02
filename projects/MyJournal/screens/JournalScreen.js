@@ -10,7 +10,9 @@ export default class JournalScreen extends Component {
     const day = dateObj.getDate();
     const month = dateObj.getMonth() + 1;
     const year = dateObj.getFullYear();
-    return `${day}.${month}.${year}`;
+    const dayString = (day < 10 ? "0" : "") + day;
+    const monthString = (month < 10 ? "0" : "") + month;
+    return `${dayString}.${monthString}.${year}`;
   }
 
   _getItemsWithSections(items) {

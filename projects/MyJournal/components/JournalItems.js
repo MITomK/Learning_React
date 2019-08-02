@@ -14,7 +14,6 @@ export default class JournalItems extends Component {
 
     return (
       <SectionList
-        style={styles.list}
         sections={this.props.items}
         renderItem={({ item }) => (
           <JournalItemRow item={item} onPress={this.props.onPress} />
@@ -41,9 +40,6 @@ const styles = StyleSheet.create({
     color: "darkslategray",
     fontSize: 22,
     fontWeight: "300"
-  },
-  list: {
-    marginTop: 24
   },
   listSectionHeader: {
     color: "gray",
