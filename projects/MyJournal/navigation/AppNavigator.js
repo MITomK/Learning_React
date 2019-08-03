@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, StatusBar } from "react-native";
+import { Platform, StatusBar, View } from "react-native";
 import {
   createAppContainer,
   createBottomTabNavigator,
@@ -13,7 +13,8 @@ import PhotosScrollScreen from "../screens/PhotosScrollScreen";
 import PhotosFlatListScreen from "../screens/PhotosFlatListScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import ItemScreen from "../screens/ItemScreen";
-import { SyntheticPlatformEmitter } from "@unimodules/core";
+import EditScreen from "../screens/EditScreen";
+import TouchableItem from "../components/TouchableItem";
 
 const Tabs = createBottomTabNavigator(
   {
@@ -78,10 +79,32 @@ const Tabs = createBottomTabNavigator(
 const AppNavigator = createStackNavigator(
   {
     root: {
-      screen: Tabs
+      screen: Tabs,
+      navigationOptions: ({ navigation }) => ({
+        headerRight: (
+          <TouchableItem
+            onPress={() => {
+              const newItem = { text: null, photo: null, date: null };
+              navigation.navigate("Edit", { item: newItem });
+            }}
+          >
+            <View>
+              <SimpleLineIcons
+                style={{ padding: 10 }}
+                name="plus"
+                size={24}
+                color="deepskyblue"
+              />
+            </View>
+          </TouchableItem>
+        )
+      })
     },
     Item: {
       screen: ItemScreen
+    },
+    Edit: {
+      screen: EditScreen
     }
   },
   {

@@ -16,10 +16,17 @@ export default class App extends Component {
     this.setState({ items });
   };
 
-  _addItem(newItem) {
+  _addItem(item) {
     let { items } = this.state;
-    newItem.date = Date.now();
-    items = [newItem, ...items];
+    if (item.date === null) {
+      // Neuer Eintrag am Anfang der Liste eintragen und speichern
+      item.date = Date.now();
+      items = [item, ...items];
+    } else {
+      // Bestehenden Eintrag in Liste aktualisieren
+      const index = items.findIndex(i => i.date === item.date);
+      items[index] = item;
+    }
     this.setState({ items: items });
     Store.saveItems(items);
   }
