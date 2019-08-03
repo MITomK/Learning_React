@@ -7,17 +7,25 @@ import {
   Text,
   View
 } from "react-native";
+import TouchableItem from "../components/TouchableItem";
 
 export default class PhotosFlatListScreen extends Component {
   _getPhoto(photoItem) {
     const { item } = photoItem;
     return (
-      <Image
-        style={styles.photo}
-        source={{ uri: item.photo }}
-        resizeMode="cover"
+      <TouchableItem
         key={item.date}
-      />
+        onPress={() => this.props.navigation.navigate("Item", { item: item })}
+      >
+        <View>
+          <Image
+            style={styles.photo}
+            source={{ uri: item.photo }}
+            resizeMode="cover"
+            key={item.date}
+          />
+        </View>
+      </TouchableItem>
     );
   }
 
