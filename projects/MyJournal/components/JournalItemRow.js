@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  Animated,
   Dimensions,
   Image,
   PanResponder,
@@ -7,42 +8,42 @@ import {
   Text,
   View
 } from "react-native";
+
+import { SimpleLineIcons } from "@expo/vector-icons";
+
 import TouchableItem from "./TouchableItem";
 
+const WINDOW_WIDTH = Dimensions.get("window").width;
+
 export default class JournalItemRow extends Component {
-  state = { backgroundColor: "transparent" };
+  // Animated.Value verwenden
+  state = { animSwipe: new Animated.Value(0) };
+
+  _cancelSwiping() {
+    Animated.spring(this.state.animSwipe, { toValue: 0 }).start();
+  }
+
   componentWillMount() {
     this._panResponder = PanResponder.create({
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
-      onPanResponderGrant: (evt, gestureState) => {
-        console.log(
-          "PanResponder-Grant: Bewegung beginnt, färbe Hintergrund des Eintrages gelb"
-        );
-        console.log("PanResponder-Grant: färbe Hinergrund rot");
-        this.setState({ backgroundColor: "yellow " });
-      },
       onPanResponderMove: (evt, gestureState) => {
-        console.log(
-          "PanResponder-Move: falles Bewegung nach links, weitermals die Hälfte des Bildschirms"
-        );
-        console.log("PanResponder-Move: färbe Hinergrund rot");
-        if (gestureState.dx < -(Dimensions.get("window").width / 3)) {
-          this.setState({ backgroundColor: "red" });
-        } else {
-          this.setState({ backgroundColor: "yellow" });
+        if (gestureState.dx < 5) {
+          this.state.animSwipe.setValue(gestureState.dx);
         }
       },
       onPanResponderRelease: (evt, gestureState) => {
-        console.log(
-          "PanResponder-Release: Bewegiung beendet, setze Frabe auf Ursprungsart"
-        );
-        this.setState({ backgroundColor: "transparent" });
+        if (gestureState.dx < -(WINDOW_WIDTH / 3)) {
+          Animated.spring(this.state.animSwipe, {
+            toValue: -WINDOW_WIDTH,
+            speed: 100
+          }).start();
+          // hier muss der Eintrag gel√∂scht werden
+        } else {
+          this._cancelSwiping();
+        }
       },
       onPanResponderTerminate: (evt, gestureState) => {
-        console.log(
-          "PanResponder-Terminate: Bewegung abgebrochen, setze Frabe auf Ursprungsart"
-        );
-        this.setState({ backgroundColor: "transparent" });
+        this._cancelSwiping();
       }
     });
   }
@@ -55,34 +56,59 @@ export default class JournalItemRow extends Component {
     const minutes = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
     const seconds = (date.getSeconds() < 10 ? "0" : "") + date.getSeconds();
     const time = `${hours}:${minutes}:${seconds}`;
-
     const photo = item.photo ? (
       <Image style={styles.image} source={{ uri: item.photo }} />
     ) : null;
 
     return (
-      <View {...this._panResponder.panHandlers}>
-        <TouchableItem onPress={this.props.onPress}>
-          <View
+      <View {...this._panResponder.panHandlers} style={styles.panContainer}>
+        <TouchableItem onPress={this.props.onPress} style={styles.touchableRow}>
+          <Animated.View
             style={[
-              styles.container,
-              { backgroundColor: this.state.backgroundColor }
+              { transform: [{ translateX: this.state.animSwipe }] },
+              styles.container
             ]}
           >
             {photo}
             <View style={styles.itemText}>
-              <Text numberOfLines={3}>{item.text}</Text>
-              <Text style={styles.time}>{`${location || ""} ${weather ||
-                ""} ${time}`}</Text>
+              <Text numberOfLines={3}>{text}</Text>
+              <Text style={styles.infosText}>
+                {`${location || ""}  ${weather || ""}    ${time}`}
+              </Text>
             </View>
-          </View>
+          </Animated.View>
         </TouchableItem>
+        <Animated.View
+          style={[
+            { transform: [{ translateX: this.state.animSwipe }] },
+            styles.delete
+          ]}
+        >
+          <SimpleLineIcons
+            name="trash"
+            size={24}
+            color="white"
+            style={{ paddingLeft: 20 }}
+          />
+        </Animated.View>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  panContainer: {
+    flexDirection: "row"
+  },
+  touchableRow: {
+    flex: 1
+  },
+  delete: {
+    justifyContent: "center",
+    backgroundColor: "orangered",
+    width: WINDOW_WIDTH,
+    marginRight: -WINDOW_WIDTH
+  },
   container: {
     flex: 1,
     flexDirection: "row",
