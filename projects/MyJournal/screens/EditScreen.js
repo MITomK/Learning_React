@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { Image, StyleSheet, TextInput, View } from "react-native";
 
 import { SimpleLineIcons } from "@expo/vector-icons";
-import { ImagePicker, Location, Permissions } from "expo";
+
+import * as ImagePicker from "expo-image-picker";
+import * as Location from "expo-location";
+import * as Permissions from "expo-permissions";
 
 import TouchableItem from "../components/TouchableItem";
 
